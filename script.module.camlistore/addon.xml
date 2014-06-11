@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addon id="script.module.camlistore" name="Camlistore XBMC library" version="0.1.0" provider-name="slspeek@gmail.com">
+  <requires>
+    <import addon="xbmc.python" version="2.1.0"/>
+    <import addon="script.module.xbmcswift2" version="2.4.0"/>
+  </requires>
+  <extension point="xbmc.python.module" library="lib">
+  </extension>
+  <extension point="xbmc.addon.metadata">
+    <platform>all</platform>
+    <language></language>
+    <summary>Camlistore XBMC library</summary>
+    <description>Library support for viewing content from your Camlistore</description>
+  </extension>
+</addon>
