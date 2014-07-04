@@ -1,9 +1,9 @@
 from xbmcswift2 import Plugin, xbmc
-from camlistore import Search
+import camlistore 
 
 plugin = Plugin()
 
-camli = Search('plugin.video.camlistore')
+camli = camlistore.Search(camlistore.xbmcConfig('plugin.video.camlistore'))
 
 @plugin.route('/')
 def main_menu():

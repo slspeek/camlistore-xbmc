@@ -8,7 +8,7 @@ import requests
 from xbmcswift2 import xbmcaddon
 
 def xbmcConfig(name):
-	addon = xmbcaddon.Addon(name)
+	addon = xbmcaddon.Addon(name)
 	return Config(
 			addon.getSetting('address'),
 			addon.getSetting('username'),
@@ -97,7 +97,7 @@ class Search:
 			if fileref:
 				items.append({
 					'label': label,
-					'path': 'http://' + self.username() + ':'+ self.password() + '@' + self.address() + '/ui/download/' + fileref,
+					'path': 'http://' + self.config.username + ':'+ self.config.password + '@' + self.config.address + '/ui/download/' + fileref,
 					'is_playable': True,
 					#'info_type': 'pictures',
 					})
