@@ -7,39 +7,54 @@
 import requests
 from xbmcswift2 import xbmcaddon
 
+def xbmcConfig(name):
+	addon = xmbcaddon.Addon(name)
+	return Config(
+			addon.getSetting('address'),
+			addon.getSetting('username'),
+			addon.getSetting('password'))
+
+class Config:
+
+	def __init__(self, address, username, password):
+		self._address = address
+		self._username = username
+		self._password = password
+
+	@property
+	def address(self):
+		return self._address
+
+	@property
+	def username(self):
+		return self._username
+
+	@property
+	def password(self):
+		return self._password
+
 
 class Search:
 
-	def __init__(self, name):
-		self.name = name
+	def __init__(self, config):
+		self.config = config
 		self.conf = self._conf_discovery()
 
 	def _conf_discovery(self):
 		""" Perform a discovery to gather server configuration. """
-		r = requests.get('http://' + self.address(),
+		r = requests.get('http://' + self.config.address,
 				auth=self.auth(),
 				headers={'Accept': 'text/x-camli-configuration'})
 		r.raise_for_status()
 		return r.json()
 
-	def address(self):
-		addon = xbmcaddon.Addon(self.name)
-		return addon.getSetting('address')
-
-	def username(self):
-		addon = xbmcaddon.Addon(self.name)
-		return addon.getSetting('username')
-
-	def password(self):
-		addon = xbmcaddon.Addon(self.name)
-		return addon.getSetting('password')
 
 	def auth(self):
-		return (self.username(), self.password())
+		return (self.config.username, self.config.password)
 
 	def _url(self,path):
 		'''Returns a full url for the given path'''            
-		return 'http://' + self.address() +  path
+		return 'http://' + self.config.address +  path
 
 	def _get(self, url, data=None):
 		resp = requests.post(url, data=data,auth=self.auth())

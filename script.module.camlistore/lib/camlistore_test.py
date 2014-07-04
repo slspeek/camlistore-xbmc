@@ -1,26 +1,30 @@
 import unittest
 import logging
+import os
+import time
+import subprocess
 
-from lib import camlistore as scraper
+from lib import camlistore 
+
+config = camlistore.Config('localhost:3179', 'camli', 'pass3179')
 
 class TestNoseCases(unittest.TestCase):
 
-	def test_get_videos(self):
-		scraper.address = lambda: "localhost:3179/"
-		scraper.username = lambda: "steven"
-		scraper.password = lambda: "gnu"
-		resp  = scraper.get_videos()
-		import json
-		logging.info(json.dumps(resp, indent=4))
-		self.assertIsNotNone(resp)
-		logging.info("HELLO")
-		self.fail()
+	@classmethod
+	def setUpClass(cls):
+		cwd = os.getcwd()
+		os.chdir(os.environ['CAMLI_SRC'])
+		cls.devcam_server = subprocess.Popen(['bin/devcam', 'server'])
+		os.chdir(cwd)
+		time.sleep(3)
+
+	@classmethod
+	def tearDownClass(cls):
+		cls.devcam_server.kill()
 		
 	def test_query(self):
-		scraper.address = lambda: "localhost:3179/"
-		scraper.username = lambda: "steven"
-		scraper.password = lambda: "gnu"
-		resp  = scraper.query("is:pano")
+		scraper = camlistore.Search(config)
+		resp  = scraper.query("-is:image")
 		import json
 		logging.info(json.dumps(resp, indent=4))
 		self.assertIsNotNone(resp)
