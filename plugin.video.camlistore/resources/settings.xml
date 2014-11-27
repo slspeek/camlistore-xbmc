@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <settings>
+	<setting id="https" type="bool" default="false" label="Use https"/>
 	<setting id="address" type="text" default="localhost:3179" label="Camlistore server address"/>
 	<setting id="username" type="text" default="camli" label="Username"/>
 	<setting id="password" type="text" default="pass3179" label="Password"/>
